@@ -32,7 +32,7 @@ void selectionSort(vector<int>& arr) {
     for(int i=0;i<n-1;i++){// 1. 外圈從 i = 0 到 n-2
         int minIndex=i;
         for(int o=i+1;o<n;o++){
-            minIndex=o;// 2. 在未排序區間中找最小值的位置 minIndex
+            if(arr[o]<arr[minIndex]) minIndex=o;// 2. 在未排序區間中找最小值的位置 minIndex
         }
         swap(arr[i],arr[minIndex]);// 3. 將 arr[i] 與 arr[minIndex] 交換
     }
@@ -180,7 +180,7 @@ int partitionArray(vector<int>& arr, int low, int high) {
     }
     swap(arr[i+1],arr[high]);// 5. 最後將 pivot 放到正確位置
     
-    return i-1;// 6. 回傳 pivot 的索引
+    return i+1;// 6. 回傳 pivot 的索引
 }
 
 void quickSort(vector<int>& arr, int low, int high) {
@@ -212,7 +212,7 @@ void countingSortByDigit(vector<int>& arr, int exp) {
         count[i]+=count[i-1];
     }// 3. 轉成累計次數
     for(int i=n-1;i>=0;i--){
-        output[count[(arr[i]/exp)&10]-1]=arr[i];
+        output[count[(arr[i]/exp)%10]-1]=arr[i];
         count[(arr[i]/exp)%10]--;
     }// 4. 由右往左放入 output，保持穩定性
     for(int i=0;i<n;i++){
